@@ -43,6 +43,31 @@
 - Prompt template: 20-30% of context window
 - Total length constraint (e.g., 4096 tokens for GPT-3.5)
 
+### *Example:*
+"Document: ""Hà Nội là thủ đô của Việt Nam. Thành phố có lịch sử nghìn năm văn hiến.""
+-> Embeddings Model created vector: [0.2, 0.5, -0.3, ...]
+-> Vector Database stored this vector
+
+#### Query: ""Hà Nội có gì đặc biệt?""
+-> Vectorize query: [0.1, 0.4, -0.2, ...]
+-> Search in Vector Database
+-> Retrieved context + Query + Prompt template 
+-> Length check < Context window limit
+-> input into LLM to generate the response
+
+#### Retrieval process:
+- Query: ""Lịch sử Hà Nội""
+retrieved_chunks = [
+    {
+        ""text"": ""Năm 1010, Lý Thái Tổ dời đô từ Hoa Lư về Thăng Long."",
+        ""similarity_score"": 0.89
+    },
+    {
+        ""text"": ""Hà Nội là thủ đô của Việt Nam. Thành phố có lịch sử nghìn năm văn hiến."",
+        ""similarity_score"": 0.85
+    },
+    ...
+]
 ## 2. Retrieval Techniques
 
 ### 2.1 Dense Retrieval
