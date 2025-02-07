@@ -79,14 +79,36 @@ retrieved_chunks = [
 - Emphasizes exact lexical matching
 - Keyword-based approach
 
-### 2.3 Hybrid Retrieval
-1. Initial filtering using Sparse Retrieval
-2. Result refinement using Dense Retrieval
-
 ## 3. Advanced Techniques
 
 ### 3.1 Hybrid Search
-- Combines semantic and keyword search
+- *Combines two approaches:* keyword/lexical search and semantic search
++ Keyword/lexical search: Based on exact matching of query terms with content + use techniques like BM25, TF-IDF for relevance scoring
++ Semantic search: 
+- *Pipeline:* 
+  + Text processing
+    - Tokenization: Breaking text into smaller units
+    - Cleaning: Removing special characters, handling whitespace
+    - Normalization: Converting to lowercase, standardizing formats
+  + Embedding generation: 
+    - Text-to-vector conversion using language models
+    - Common models include: BERT and its variants (RoBERTa, DistilBERT), Sentence transformers like SBERT, Domain-specific models for specialized content
+  + Vector Storage and Indexing:
+    - Vector databases (like Pinecone, Milvus, FAISS)
+    - Indexing structures: HNSW (Hierarchical Navigable Small World), IVF (Inverted File Index), Product Quantization for compression.
+  + Metadata storage for additional filtering
+  + Query processing
+  + Result Combination: The results are combined through:
+    * Selection of top K results from each method
+    * Calculation of composite scores using both keyword and semantic relevance
+    * Re-ranking based on combined scores
+  + Scoring Mechanisms:
+    * Keyword scoring: Often uses BM25 or TF-IDF algorithms
+    * Semantic scoring: Uses cosine similarity between vectors
+    * Combined scoring: Weighted average or more complex fusion methods
+
+Vector dimensionality typically ranges from 384 to 1024
+
 - Improves retrieval accuracy
 - Utilizes language models for embedding conversion
 
