@@ -69,6 +69,9 @@ retrieved_chunks = [
     ...
 ]
 ## 2. Retrieval Techniques
+- Retrieval Basics = Manual retrieval: Data + LLM = Response
+- Retrieval Components: Question, Raw Data Source, Knowledge Base, Relevant Docs
+### Retrieval Nuts & Bolts
 
 ### 2.1 Dense Retrieval
 - Focus on semantic similarity
@@ -95,7 +98,7 @@ retrieved_chunks = [
     - Common models include: BERT and its variants (RoBERTa, DistilBERT), Sentence transformers like SBERT, Domain-specific models for specialized content
   + Vector Storage and Indexing:
     - Vector databases (like Pinecone, Milvus, FAISS)
-    - Indexing structures: HNSW (Hierarchical Navigable Small World), IVF (Inverted File Index), Product Quantization for compression.
+    - Indexing structures: HNSW (Hierarchical Navigable Small World), IVF (Inverted File Index)
   + Metadata storage for additional filtering
   + Query processing
   + Result Combination: The results are combined through:
