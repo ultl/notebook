@@ -68,10 +68,66 @@ retrieved_chunks = [
     },
     ...
 ]
-## 2. Retrieval Techniques
+## 2. Retrieval
 - Retrieval Basics = Manual retrieval: Data + LLM = Response
 - Retrieval Components: Question, Raw Data Source, Knowledge Base, Relevant Docs
 ### Retrieval Nuts & Bolts
+![alt text](retrieval_overview.png)
+- Document Loaders: Tools that import documents from various sources (PDFs, web pages, databases) into your RAG system. They handle different file formats and structures.
+  - Implementation: Abstract interfaces for different data sources
+  - Key methods: load(), stream()
+  - Handles: Authentication, rate limiting, pagination
+  - Common patterns: Factory pattern for different source types
+- Index: A specialized data structure that enables fast document retrieval. Common types include vector indexes (for semantic search) and inverted indexes (for keyword search).
+  - Data structure optimized for similarity search
+  - Common implementations: FAISS, Elasticsearch, Pinecone
+  - Trade-offs: Memory vs. speed vs. accuracy
+  - Technical considerations: Dimensionality, clustering, quantization
+- Knowledge Base: The organized collection of all your documents and their associated metadata, typically stored in a database or vector store.
+  - Storage layer integrating documents + metadata
+  - Schema design: Document versioning, timestamps, access controls
+  - Typically uses: Vector DB + metadata store
+  - Considerations: Sharding, replication, consistency
+- Relevant Docs: Documents retrieved from your knowledge base that match the current query, usually based on semantic similarity or keyword matching.
+  - Retrieved via: kNN search, filtering, reranking
+  - Performance metrics: Recall@K, Mean Reciprocal Rank
+  - Query optimization: Caching, batching, pruning
+  - Implementation: Often uses hybrid search (semantic + keyword)
+- Context: The selected portions of relevant documents that are fed into the language model alongside the user's query to generate an informed response.
+  - Memory constraints: Token window limits
+  - Optimization: Sliding windows, hierarchical chunking
+  - Engineering challenge: Context length vs. relevance trade-off
+  - Implementation: Smart truncation, prioritization algorithms
+- Document Transform:
+  - Pipeline architecture: Modular, composable transformers
+  - Common operations: Text cleaning, embedding generation, chunking
+  - Performance consideration: Async processing, batch operations
+  - Error handling: Document validation, transformation recovery
+### Retrieval Inventory
+![alt text](retrieval_inventory.png)
+- Input Flow:
+  - Raw data is loaded into Documents via Loaders
+  - Documents are indexed into a Knowledge Base Vector/Doc Store
+  - User Query goes through Query Transformation, potentially becoming Multi-Query
+
+- Retrieval Process:
+  - System uses two retrieval methods
+    - Maximum Marginal Relevance (MMR) to find relevant documents
+    - Multi-Vector Parent Document approach for broader context
+  - These methods extract Relevant Docs from the knowledge base
+
+- Processing & Response:
+  - Documents undergo Document Transform to create Context
+  - Context goes through Contextual Compression
+  - LLM combines compressed context with prompt method to generate final Response
+
+- Key components that improve retrieval quality:
+  - Multi-Query transformation for broader search coverage
+  - MMR for diverse, relevant results
+  - Contextual compression to optimize context for LLM
+  - Vector/Doc store architecture for efficient retrieval
+
+#### Query Transformation (Multi-Query)
 
 ### 2.1 Dense Retrieval
 - Focus on semantic similarity
