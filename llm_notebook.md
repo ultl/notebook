@@ -30,6 +30,11 @@
 - Vector Database (e.g., Pinecone)
   - Stores vector embeddings
   - Enables similarity search
+- Vectors: Word embeddings, and Contextual embeddings
+- Word embeddings: Each word has a single vector regardless of context
+  - Architecture: typically shallow neural networks (Word2Vec, GloVe)
+- Contextual embeddings: Each word gets a different vector based on surrounding context
+  - Architecture: deep neural networks (BERT, GPT-3)
 
 ### 1.2 Processing Pipeline
 
